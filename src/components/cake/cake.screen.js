@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import { buyCake, returnCake } from './../../redux'
 
 const CakeScreen = (props) => {
+  
+  const [quantity, setQuantity] = useState(5);
+
   return (
     <div>
       <h2>Number of Cakes - { props.numberOfCakes }</h2>
-      <button onClick={ props.buyCake }>Buy Cakes</button>
-      <button onClick={ props.returnCake }>Return Cakes</button>
+      <input 
+        type="text" 
+        placeholder="Enter quantity"
+        name="quantity" 
+        value={quantity} 
+        onChange={ (ev) => setQuantity(ev.target.value) }
+      />
+      <button onClick={ () => props.buyCake(quantity) }>Buy Cakes</button>
+      <button onClick={ () => props.returnCake(quantity) }>Return Cakes</button>
     </div>
   )
 }
-
 
 const mapStateToProps = (state) => {
   return {
@@ -19,10 +28,11 @@ const mapStateToProps = (state) => {
   }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    buyCake: () => dispatch(buyCake()),
-    returnCake: () => dispatch(returnCake()),
+    buyCake: (quantity) => dispatch(buyCake(quantity)),
+    returnCake: (quantity) => dispatch(returnCake(quantity)),
   }
 }
 
